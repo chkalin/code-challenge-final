@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/fragments/header :: header-css"/>
+    <script type="text/javascript">
+        function change()
+        {
+            var btn = document.getElementById("btn");
+            if (btn.value == "UnFollow"){
+                btn.value="Follow Me";
+            }
+            else{
+                btn.value="UnFollow";
+            }
+            btn.disabled=false;
+        }
+    </script>
+</head>
+<body>
+
+<div th:replace="/fragments/header :: header"/>
+
+<div class="container">
+
+    <div class="jumbotron">
+        <h1 th:text="${user.name} + '\'s Blog'">Username Blog </h1>
+        <input sec:authorize="isAuthenticated()" type="button" id="btn" value="Follow Me" onclick="change()" />
+    </div>
+
+    <br></br>
+    <br></br>
+
+    <div th:replace="/fragments/posts :: posts"/>
+
+    <div th:replace="/fragments/pagination :: pagination(URLparameter='/blog/' + ${user.username})"/>
+
+</div>
+<!-- /.container -->
+
+<div th:replace="/fragments/footer :: footer"/>
+
+</body>
+</html>

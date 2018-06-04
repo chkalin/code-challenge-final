@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/fragments/header :: header-css"/>
+    <script type="text/javascript">
+        function change()
+        {
+            var btn = document.getElementById("btn");
+            var current = document.getElementById("current");
+            var username = document.getElementById("username");
+            if (btn.value == "UnFollow"){
+                btn.value="Follow Me";
+                window.location.href="/blog/delete-" + username.value + '-' + current.value;
+            }
+            else{
+                btn.value="UnFollow";
+                window.location.href="/blog/add-" + username.value + '-' + current.value;
+            }
+            btn.disabled=false;
+        }
+    </script>
+</head>
+<body>
+
+<div th:replace="/fragments/header :: header"/>
+
+<div class="container">
+
+    <div class="jumbotron">
+        <h1 th:text="${user.username} + '\'s Blog'">Username Blog </h1>
+        <div><input type="hidden" name="username" th:value="${followstatus.getWatch()}" id="username" /></div>
+        <div><input type="hidden" name="current" th:value="${#authentication.getName()}" id="current" /></div>
+        <input th:if="${followstatus.getWatch()}!=${#authentication.getName()}" sec:authorize="isAuthenticated()" th:type="button" th:id="btn" th:value="${followstatus.getValue()}" onclick="change()" />
+    </div>
+
+    <br></br>
+    <br></br>
+
+    <div th:replace="/fragments/posts :: posts"/>
+
+    <div th:replace="/fragments/pagination :: pagination(URLparameter='/blog/' + ${user.username}+'-'+ ${followstatus.current})"/>
+
+</div>
+<!-- /.container -->
+
+<div th:replace="/fragments/footer :: footer"/>
+
+</body>
+</html>
