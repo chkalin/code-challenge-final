@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="/fragments/header :: header"/>
+
+<div class="container">
+
+    <div class="jumbotron">
+        <h1 th:text="${user.name} + '\'s Follow'">Username Follow</h1>
+    </div>
+    <div class="row">
+        You didn't follow anyone yet, you may be interested to find more fun and follow anyone here.---->
+        <a th:text="clickMe" th:href="@{'/home'}">blogHome</a>
+    </div>
+
+</div>
+
+<div th:replace="/fragments/footer :: footer"/>
+
+</body>
+</html>
